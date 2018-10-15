@@ -22,6 +22,11 @@ tests = testGroup "CRDT" [
             let buf = V.fromList [Cell (1 % 4) 'a', Cell (1 % 2) 'b', Cell (3 % 4) 'c']
             in emit buf @?= "abc",
 
+        testCase "insert way after" $
+            let orig = insert' mempty 0 'a'
+                actual = insert' orig 100 'b'
+            in emit actual @?= "ab"
+
     ]
 
 
