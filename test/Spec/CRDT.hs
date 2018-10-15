@@ -48,12 +48,18 @@ tests = testGroup "CRDT" [
                 y = insert' (insert' x 0 'a') 0 'a'
                 actual = insert' (insert' y 2 'a') 1 'a'
                 unique = S.fromList . V.toList . fmap uid $ actual
-            in Prelude.length unique @?= 6
+            in Prelude.length unique @?= 6,
 
+        testCase "increasing identifiers" $
+        let x = insert' (insert' mempty 1 'a') 1 'a'
+            y = insert' (insert' x 0 'a') 0 'a'
+            actual = insert' (insert' y 2 'a') 1 'a'
+        in snd (Prelude.foldl ascending (0, True) (fmap uid actual)) @?= True
     ]
 
-
-
+ascending :: (Ord a) => (a, Bool) -> a -> (a, Bool)
+ascending (x, True) y = if y > x then (y, True) else (y, False)
+ascending _ y = (y, False)
 
 insert' :: Buffer -> Int -> Char -> Buffer
 insert' cs i c = fst $ insert cs i c
