@@ -6,29 +6,28 @@ import qualified Data.Text as T (singleton, concat)
 import Data.Vector as V
 
 data Cell where
-    Start :: Cell
-    End :: Cell
-    Atom :: Rational -> Char -> Cell
+    Cell :: Rational -> Char -> Cell
     deriving (Eq, Show)
 
+start :: Rational
+start  = 0
+end :: Rational
+end = 1
+
 uid :: Cell -> Rational
-uid Start = 0
-uid End = 1
-uid (Atom p _) = p
+uid (Cell p _) = p
 
 text :: Cell -> Text
-text Start = ""
-text End = ""
-text (Atom _ v) = T.singleton v
+text (Cell _ v) = T.singleton v
 
-makeCell :: Cell -> Cell -> Char -> Cell
-makeCell before after c = Atom ((uid before + uid after) / 2) c
+makeCell :: Rational -> Rational -> Char -> Cell
+makeCell before after c = Cell ((before + after) / 2) c
 
-firstc :: Vector Cell -> Cell
-firstc cs = if V.null cs then End else V.head cs
+firstc :: Vector Cell -> Rational
+firstc cs = if V.null cs then end else uid (V.head cs)
 
-lastc :: Vector Cell -> Cell
-lastc cs = if V.null cs then Start else V.last cs
+lastc :: Vector Cell -> Rational
+lastc cs = if V.null cs then start else uid (V.last cs)
 
 stitch :: Vector Cell -> Vector Cell -> Char -> (Vector Cell, Cell)
 stitch left right new =
