@@ -11,6 +11,7 @@ data Cell where
 
 start :: Rational
 start  = 0
+
 end :: Rational
 end = 1
 
