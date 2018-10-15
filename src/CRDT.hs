@@ -40,9 +40,6 @@ type Buffer = V.Vector Cell
 insert :: Buffer -> Int -> Char -> (Buffer, Cell)
 insert cs i c = stitch (V.take i cs) (V.drop i cs) c
 
-insert' :: Buffer -> Int -> Char -> Buffer
-insert' cs i c = fst $ insert cs i c
-
 emit :: Buffer -> Text
 emit cs = T.concat . toList . fmap text $ cs
 
