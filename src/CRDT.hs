@@ -42,5 +42,3 @@ insert cs i c = stitch (V.take i cs) (V.drop i cs) c
 
 emit :: Buffer -> Text
 emit cs = T.concat . toList . fmap text $ cs
-
-
