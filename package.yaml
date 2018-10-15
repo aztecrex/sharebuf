@@ -1,0 +1,42 @@
+name:                sharebuf
+version:             0.1.0.0
+github:              "githubuser/sharebuf"
+license:             BSD3
+author:              "Greg Wiley"
+maintainer:          "Greg Wiley <aztec.rex@jammm.com>"
+copyright:           "2018 Greg Wiley"
+
+extra-source-files:
+- README.md
+
+description: See <https://github.com/githubuser/sharebuf#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  sharebuf-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - sharebuf
+
+tests:
+  sharebuf-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - sharebuf
+
+
