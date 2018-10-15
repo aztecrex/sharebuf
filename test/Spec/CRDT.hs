@@ -18,6 +18,10 @@ tests = testGroup "CRDT" [
         testCase "initial insert" $
             insert mempty 0 'a' @?= (V.singleton (Cell (1 % 2) 'a'), Cell (1 % 2) 'a'),
 
+        testCase "insert returns inserted" $
+            let c = 'b'
+                actual = snd (insert (insert' mempty 0 'z') 0 c)
+            in value actual @?= c,
 
         testCase "emit as text" $
             let buf = V.fromList [Cell (1 % 4) 'a', Cell (1 % 2) 'b', Cell (3 % 4) 'c']
@@ -60,6 +64,9 @@ tests = testGroup "CRDT" [
 ascending :: (Ord a) => (a, Bool) -> a -> (a, Bool)
 ascending (x, True) y = if y > x then (y, True) else (y, False)
 ascending _ y = (y, False)
+
+value :: Cell -> Char
+value (Cell _ v) = v
 
 insert' :: Buffer -> Int -> Char -> Buffer
 insert' cs i c = fst $ insert cs i c
