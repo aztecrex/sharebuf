@@ -35,7 +35,12 @@ tests = testGroup "CRDT" [
         testCase "insert before all" $
             let orig = insert' mempty 0 'a'
                 actual = insert' orig 0 'b'
-            in emit actual @?= "ba"
+            in emit actual @?= "ba",
+
+        testCase "insert between" $
+            let orig = insert' (insert' mempty 0 'a') 1 'b'
+                actual = insert' orig 1 'c'
+            in emit actual @?= "acb"
 
     ]
 
