@@ -4,6 +4,7 @@ import Test.Tasty (TestTree, testGroup, defaultMain)
 import Test.Tasty.HUnit (testCase, (@?=))
 
 import Data.Ratio ((%))
+import Data.Set as S (fromList)
 import Data.Vector as V
 
 import CRDT
@@ -40,7 +41,14 @@ tests = testGroup "CRDT" [
         testCase "insert between" $
             let orig = insert' (insert' mempty 0 'a') 1 'b'
                 actual = insert' orig 1 'c'
-            in emit actual @?= "acb"
+            in emit actual @?= "acb",
+
+        testCase "unique identifiers" $
+            let x = insert' (insert' mempty 1 'a') 1 'a'
+                y = insert' (insert' x 0 'a') 0 'a'
+                actual = insert' (insert' y 2 'a') 1 'a'
+                unique = S.fromList . V.toList . fmap uid $ actual
+            in Prelude.length unique @?= 6
 
     ]
 
