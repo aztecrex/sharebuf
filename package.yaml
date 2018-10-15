@@ -7,12 +7,18 @@ maintainer:          "Greg Wiley <aztec.rex@jammm.com>"
 copyright:           "2018 Greg Wiley"
 
 extra-source-files:
-- README.md
+  - README.md
 
 description: See <https://github.com/githubuser/sharebuf#readme>
 
+
+ghc-options:
+  - -Wall
+
 dependencies:
-- base >= 4.7 && < 5
+  - base >= 4.7 && < 5
+  - text
+  - vector
 
 library:
   source-dirs: src
@@ -38,5 +44,33 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - sharebuf
+    - tasty
+    - tasty-hunit
 
+default-extensions:
+  - ConstraintKinds
+  - DataKinds
+  - DefaultSignatures
+  - DeriveAnyClass
+  - DeriveFunctor
+  - DeriveGeneric
+  - ExistentialQuantification
+  - FlexibleContexts
+  - FlexibleInstances
+  - FunctionalDependencies
+  - GADTs
+  - MonoLocalBinds
+  - GeneralizedNewtypeDeriving
+  - KindSignatures
+  - LambdaCase
+  - MultiParamTypeClasses
+  - NamedFieldPuns
+  - OverloadedStrings
+  - RankNTypes
+  - ScopedTypeVariables
+  - StandaloneDeriving
+  - TupleSections
+  - TypeApplications
+  - TypeOperators
+  - TypeFamilies
 
